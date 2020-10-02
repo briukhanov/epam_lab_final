@@ -59,5 +59,4 @@ variable "pub_subnet_id" {
 }
 variable "aws_ec2_key" {
   description = ""
-  type        = string
 }
