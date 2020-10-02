@@ -9,7 +9,6 @@ pipeline {
                     credentialsId: 'github-ssh-key',
                     branch: 'master'
                     sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
-                    sh 'ls'
             }
         }
 
@@ -24,12 +23,12 @@ pipeline {
                 AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
-            steps {
+            steps { dir ('terraform') {
                 sh '''
-                cd terraform
                 terraform init -input=false
                 terraform workspace select dev
                 '''
+              }
             }
         }
         stage('Provision infrastructure (plan)') {
@@ -38,10 +37,9 @@ pipeline {
                 AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
-            steps {
-                sh 'cd terraform'
-                sh 'ls'
+            steps { dir ('terraform') {
                 sh 'terraform plan -out=tfplan -input=false'
+              }
             }
         }
         stage('Provision infrastructure (apply)') {
@@ -50,9 +48,9 @@ pipeline {
                 AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
-            steps {
-                sh 'cd terraform'
+            steps { dir ('terraform') {
                 sh 'terraform apply -auto-approve -input=false tfplan'
+              }
                 sshagent(credentials : ['wibob-Frankfurt']) {
                 sh '''
                 DOCKER_DNS=`terraform output docker_server_public_dns`
