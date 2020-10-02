@@ -1,0 +1,86 @@
+---
+# - name: Add postgres repository
+#   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main' state=present
+#
+# - name: Add postgres repository key
+#   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+
+- name: Install postgresql
+  apt: pkg=postgresql state=present force=yes
+
+- name: Start postgresql server
+  service: name=postgresql state=started enabled=yes
+
+# # Posgres Configuration
+# - name: Sets postgres conf file
+#   template:
+#     src: "postgresql.conf.j2"
+#     dest: "/etc/postgresql/10/main/postgresql.conf"
+#     mode: 0644
+#   notify: Restart Postgres
+- name: Configure global settings.
+  lineinfile:
+    dest: "/etc/postgresql/10/main/postgresql.conf"
+    regexp: "^#?listen_addresses"
+    line: listen_addresses  '*'
+    state: present
+    mode: 0644
+  notify: Restart Postgres
+
+# Postgres Init Script
+- name: Sets postgres initfile
+  template:
+    src: "init_postgresql.sh.j2"
+    dest: "/tmp/init_postgresql.sh"
+    mode: 0755
+
+- name: Configure max connections.
+  lineinfile:
+    dest: "/etc/postgresql/10/main/postgresql.conf"
+    regexp: "max_connections"
+    line: max_connections = 600
+    state: present
+    mode: 0644
+  notify: Restart Postgres
+
+  # listen_addresses	‘*’
+  # port	5432
+  # max_connections = 100
+
+
+- name: Run a script
+  script: /tmp/init_postgresql.sh
+
+
+
+# COPY docker-healthcheck /usr/local/bin/
+# HEALTHCHECK CMD ["docker-healthcheck"]
+# ENTRYPOINT ["docker-entrypoint.sh"]
+# EXPOSE 5432
+#
+# RUN chmod 777 /opt
+#
+# CMD ["postgres", "-c", "config_file=/opt/postgresql.conf", "-p", "5432"]
+
+
+#
+#     - name: Enables new site
+#       file:
+#         src: "/etc/nginx/sites-available/{{ nginx_http_conf }}"
+#         dest: "/etc/nginx/sites-enabled/{{ nginx_http_conf }}"
+#         state: link
+#       notify: Reload Nginx
+#
+#     - name: Removes "default" site
+#       file:
+#         path: "/etc/nginx/sites-enabled/default"
+#         state: absent
+#       notify: Reload Nginx
+#
+# # UFW Configuration
+#     - name: "UFW - Allow HTTP on port {{ nginx_http_port }}"
+#       ufw:
+#         rule: allow
+#         port: "{{ nginx_http_port }}"
+#         proto: tcp

@@ -1,0 +1,33 @@
+# - name: Download package
+#   get_url:
+#     url: http://archive.apache.org/dist/lucene/solr/7.2.1/solr-7.2.1.tgz
+#     dest: /tmp
+#     checksum: md5:c9a2a610a20064228f42dad8b1128b46
+#     mode: '0440'
+# - name: Create pkg folder
+#   file:
+#     path: usr/local/bin/solr-7.2.1
+#     state: directory
+#     mode: '0755'
+
+
+- name: Download package
+  unarchive:
+    src: http://archive.apache.org/dist/lucene/solr/7.2.1/solr-7.2.1.tgz
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Run SOLR
+  command: /usr/local/bin/solr-7.2.1/bin/solr start
+
+#
+#
+#
+#
+# COPY --chown=solr:solr ./scripts/intermine.sh /opt/scripts/intermine.sh
+# ENV MEM_OPTS="-Xmx2g -Xms1g"
+# ENV JAVA_OPTS="$JAVA_OPTS -Dorg.apache.el.parser.SKIP_IDENTIFIER_CHECK=true ${MEM_OPTS} -XX:+UseParallelGC -XX:SoftRefLRUPolicyMSPerMB=1 -XX:MaxHeapFreeRatio=99"
+# EXPOSE 8983
+# USER $SOLR_USER
+# ENTRYPOINT ["docker-entrypoint.sh"]
+# CMD /opt/scripts/intermine.sh ${MINE_NAME:-biotestmine}

@@ -1,0 +1,55 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  connection: local
+  become: yes
+  roles:
+    - role: postgres
+      when: ansible_facts['os_family'] == "Debian"
+      tags: webapp
+
+
+- hosts: all
+  gather_facts: yes
+  connection: local
+  become: yes
+  roles:
+    - role: tomcat
+      when: ansible_facts['os_family'] == "Debian"
+      tags: webapp
+
+- hosts: all
+  gather_facts: yes
+  connection: local
+  become: yes
+  roles:
+    - role: build_dep
+      when: ansible_facts['os_family'] == "Debian"
+      tags: webapp
+
+# - hosts: localhost
+#   become: False
+#   connection: local
+#   roles:
+#     - role: solr
+#       when: ansible_facts['os_family'] == "Debian"
+#       tags: webapp
+
+- hosts: all
+  gather_facts: yes
+  connection: local
+  become: yes
+  roles:
+    - role: docker
+      when: ansible_facts['os_family'] == "Debian"
+      tags: docker
+
+
+
+
+- hosts: all
+  connection: local
+  tasks:
+    - debug:
+        msg: Sorry this script does not support OS from {{ ansible_os_family }} family. Check log!
+      when: ansible_facts['os_family'] != "Debian"

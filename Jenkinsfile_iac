@@ -1,0 +1,88 @@
+pipeline {
+
+    agent any
+
+    stages {
+        stage ('checkout git') {
+            steps {
+                    git url: 'git@github.com:briukhanov/epam_lab_final.git',
+                    credentialsId: 'github-ssh-key',
+                    branch: 'master'
+                }
+                sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+            }
+        }
+
+        stage('Check Terraform version') {
+            steps {
+               sh 'terraform --version'
+            }
+        }
+        stage('Provision infrastructure (init)') {
+            environment {
+                AWS_CRED=credentials('AWS-pipeline')
+                AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
+                AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
+            }
+            steps {
+                sh 'terraform init -input=false'
+                sh 'terraform workspace select dev'
+            }
+        }
+        stage('Provision infrastructure (plan)') {
+            environment {
+                AWS_CRED=credentials('AWS-pipeline')
+                AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
+                AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
+            }
+            steps {
+                sh 'terraform plan -out=tfplan -input=false'
+            }
+        }
+        stage('Provision infrastructure (apply)') {
+            environment {
+                AWS_CRED=credentials('AWS-pipeline')
+                AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
+                AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
+            }
+            steps {
+                sh 'terraform apply -auto-approve -input=false tfplan'
+                sshagent(credentials : ['wibob-Frankfurt']) {
+                sh '''
+                DOCKER_DNS=`terraform output docker_server_public_dns`
+                APP_DNS=`terraform output web_server_public_dns`
+                echo "Jenkins address: http://$DOCKER_DNS":8080
+                echo "Initial Admin password for Jenkins:"
+                ssh -o StrictHostKeyChecking=no ubuntu@$DOCKER_DNS "sudo docker exec Jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
+                echo --------------------------------------------
+                echo "Application Server Address:"
+                echo $APP_DNS
+                echo --------------------------------------------
+                '''
+                }
+              }
+        }
+
+
+        // stage ('Deploy') {
+        //     environment {
+        //         AWS_CRED=credentials('AWS-pipeline')
+        //         AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
+        //         AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
+        //     }
+        //     steps{
+        //         sshagent(credentials : ['wibob-Frankfurt']) {
+        //         sh '''
+        //         AWS_SERVER_IP=`terraform output public_ip` && echo $AWS_SERVER_IP
+        //         ssh -o StrictHostKeyChecking=no ec2-user@$AWS_SERVER_IP
+        //         echo $AWS_SERVER_IP
+        //         ssh ec2-user@$AWS_SERVER_IP "sudo rm -rf /var/www/temp_deploy/"
+        //         ssh ec2-user@$AWS_SERVER_IP "sudo mkdir -p /var/www/temp_deploy && sudo chown ec2-user /var/www/temp_deploy"
+        //         scp -r ./app_content/* ec2-user@$AWS_SERVER_IP:/var/www/temp_deploy/
+        //         ssh ec2-user@$AWS_SERVER_IP "sudo rm -rf /var/www/html && sudo mv /var/www/temp_deploy/ /var/www/html"
+        //         '''
+        //         }
+        //     }
+        // }
+    }
+}
