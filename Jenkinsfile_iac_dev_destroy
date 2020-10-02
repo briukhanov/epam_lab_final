@@ -9,27 +9,28 @@ pipeline {
                   git url: 'git@github.com:briukhanov/epam_lab_final.git',
                   credentialsId: 'github-ssh-key',
                   branch: 'master'
-              }
-              sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+                  sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+          }
+
       }
-        stage ('Check Terraform version') {
-            steps {
-               sh 'terraform --version'
-            }
-        }
-        stage ('Destroy dev infrastructure') {
-            environment {
-                AWS_CRED=credentials('AWS-pipeline')
-                AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
-                AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
-            }
-            steps dir ('terraform') {
-                sh '''
-                terraform init -input=false
-                terraform workspace select dev
-                terraform destroy -auto-approve
-                '''
-            }
-        }
+        // stage ('Check Terraform version') {
+        //     steps {
+        //        sh 'terraform --version'
+        //     }
+        // }
+        // stage ('Destroy dev infrastructure') {
+        //     environment {
+        //         AWS_CRED=credentials('AWS-pipeline')
+        //         AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
+        //         AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
+        //     }
+        //     steps dir ('terraform') {
+        //         sh '''
+        //         terraform init -input=false
+        //         terraform workspace select dev
+        //         terraform destroy -auto-approve
+        //         '''
+        //     }
+        // }
       }
 }
