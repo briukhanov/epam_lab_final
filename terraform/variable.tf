@@ -1,6 +1,6 @@
 # AWS Region Where Resources Will be Created
 variable "aws_region" { default = "eu-central-1" }
-variable "private_key_ec2" { default = "~/.ssh/wibob-Frankfurt-aws.pem" }
+variable "private_key_ec2" { default = "aws.pem" }
 
 # AWS ec2_instance type
 variable "web_instance_type" { default = "t2.micro" }

@@ -31,8 +31,8 @@ module "app_layer" {
   docker_instance_type        = var.docker_instance_type
   instance_access_private_key = var.instance_access_private_key
   cluster_name                = "intermine"
-  # private_key_ec2             = var.private_key_ec2
-  aws_ec2_key   = var.aws_ec2_key
+  private_key_ec2             = var.private_key_ec2
+  # aws_ec2_key   = var.aws_ec2_key
   env_name      = var.workspace_to_env_name_map[terraform.workspace]
   sec_grp_id    = module.network.sg_id
   pub_subnet_id = module.network.public_subnet_id
