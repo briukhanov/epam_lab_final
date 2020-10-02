@@ -9,6 +9,7 @@ pipeline {
                     credentialsId: 'github-ssh-key',
                     branch: 'master'
                     sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+                    sh 'ls'
             }
         }
 
@@ -39,6 +40,7 @@ pipeline {
             }
             steps {
                 sh 'cd terraform'
+                sh 'ls'
                 sh 'terraform plan -out=tfplan -input=false'
             }
         }
