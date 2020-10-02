@@ -41,10 +41,10 @@ variable "cluster_name" {
   description = ""
   type        = string
 }
-# variable "private_key_ec2" {
-#   description = ""
-#   type        = string
-# }
+variable "private_key_ec2" {
+  description = ""
+  type        = string
+}
 variable "env_name" {
   description = ""
   type        = string
@@ -57,6 +57,6 @@ variable "pub_subnet_id" {
   type        = string
   description = ""
 }
-variable "aws_ec2_key" {
-  description = ""
-}
+# variable "aws_ec2_key" {
+#   description = ""
+# }
