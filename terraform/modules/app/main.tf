@@ -53,11 +53,12 @@ resource "aws_instance" "web_instance" {
     ]
   }
   connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    password    = ""
-    host        = self.public_ip
-    private_key = file(var.private_key_ec2)
+    type     = "ssh"
+    user     = "ubuntu"
+    password = ""
+    host     = self.public_ip
+    # private_key = file(var.private_key_ec2)
+    private_key = var.aws_ec2_key
   }
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
@@ -105,11 +106,12 @@ resource "aws_instance" "docker_instance" {
   }
 
   connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    password    = ""
-    host        = self.public_ip
-    private_key = file(var.private_key_ec2)
+    type     = "ssh"
+    user     = "ubuntu"
+    password = ""
+    host     = self.public_ip
+    # private_key = file(var.private_key_ec2)
+    private_key = var.aws_ec2_key
   }
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
