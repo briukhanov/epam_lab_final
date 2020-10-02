@@ -38,6 +38,7 @@ pipeline {
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
             steps {
+                sh 'cd terraform'
                 sh 'terraform plan -out=tfplan -input=false'
             }
         }
@@ -48,6 +49,7 @@ pipeline {
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
             steps {
+                sh 'cd terraform'
                 sh 'terraform apply -auto-approve -input=false tfplan'
                 sshagent(credentials : ['wibob-Frankfurt']) {
                 sh '''
