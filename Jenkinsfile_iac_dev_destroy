@@ -38,7 +38,7 @@ pipeline {
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
             steps { dir ('terraform') {
-                sh terraform destroy -auto-approve
+                sh 'terraform destroy -auto-approve'
               }
             }
       }
