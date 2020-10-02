@@ -43,7 +43,9 @@ pipeline {
               withCredentials([sshUserPrivateKey(credentialsId: 'wibob-Frankfurt-ubuntu', keyFileVariable: 'AWS_EC2_KEY', passphraseVariable: '', usernameVariable: '')]) {
                 sh 'whoami'
                 sh 'pwd'
-                sh 'echo "$AWS_EC2_KEY" > aws.pem'
+                sh touch 1.txt
+                sh touch ../2.txt
+                sh 'echo "$AWS_EC2_KEY" > ../aws.pem'
               }
                 sh 'terraform plan -out=tfplan -input=false'
 
