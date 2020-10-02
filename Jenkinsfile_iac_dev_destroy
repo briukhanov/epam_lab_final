@@ -16,9 +16,12 @@ pipeline {
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
             steps {
-                sh 'terraform init -input=false'
-                sh 'terraform workspace select dev'
-                sh 'terraform destroy -auto-approve'
+                sh '''
+                terraform init -input=false
+                terraform workspace select dev
+                terraform destroy -auto-approve
+                '''
             }
         }
+      }
 }
