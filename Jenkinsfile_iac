@@ -38,10 +38,14 @@ pipeline {
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
             steps { dir ('terraform') {
-                sh 'terraform plan -out=tfplan -input=false'
+              withCredentials([sshUserPrivateKey(credentialsId: 'wibob-Frankfurt-ubuntu', keyFileVariable: 'AWS_EC2_KEY', passphraseVariable: '', usernameVariable: '')]) {
+      // some block
+                sh 'echo $AWS_EC2_KEY'
+                sh 'terraform plan -out=tfplan -input=false -var aws_ec2_key=$AWS_EC2_KEY'
               }
             }
-        }
+          }
+        }   
         stage('Provision infrastructure (apply)') {
             environment {
                 AWS_CRED=credentials('AWS-pipeline')
