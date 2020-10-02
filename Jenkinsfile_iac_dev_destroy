@@ -19,7 +19,7 @@ pipeline {
                sh 'terraform --version'
             }
         }
-        stage('Provision infrastructure (init)') {
+        stage('Destroy dev infrastructure') {
             environment {
                 AWS_CRED=credentials('AWS-pipeline')
                 AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
