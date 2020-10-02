@@ -42,8 +42,8 @@ pipeline {
             steps { dir ('terraform') {
               withCredentials([sshUserPrivateKey(credentialsId: 'wibob-Frankfurt-ubuntu', keyFileVariable: 'AWS_EC2_KEY', passphraseVariable: '', usernameVariable: '')]) {
       // some block
-
-                sh 'terraform plan -out=tfplan -input=false -var aws_ec2_key=$AWS_EC2_KEY'
+                sh 'cp "$AWS_EC2_KEY" aws.pem'
+                sh 'terraform plan -out=tfplan -input=false'
               }
             }
           }
@@ -57,7 +57,6 @@ pipeline {
             steps { dir ('terraform') {
               withCredentials([sshUserPrivateKey(credentialsId: 'wibob-Frankfurt-ubuntu', keyFileVariable: 'AWS_EC2_KEY', passphraseVariable: '', usernameVariable: '')]) {
     // some block
-                sh 'export TF_VAR_aws_ec2_key=$AWS_EC2_KEY'
                 sh 'terraform apply -auto-approve -input=false tfplan'
               }
             }

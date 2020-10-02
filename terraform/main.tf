@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-variable aws_ec2_key {}
+# variable aws_ec2_key {}
 # env_name = var.workspace_to_env_name_map[terraform.workspace]
 
 
