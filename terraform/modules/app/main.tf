@@ -109,7 +109,7 @@ resource "aws_instance" "docker_instance" {
     user        = "ubuntu"
     password    = ""
     host        = self.public_ip
-    private_key = file("${var.private_key_ec2}")
+    private_key = file(var.private_key_ec2)
   }
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
