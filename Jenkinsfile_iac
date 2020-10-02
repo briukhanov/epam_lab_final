@@ -8,8 +8,7 @@ pipeline {
                     git url: 'git@github.com:briukhanov/epam_lab_final.git',
                     credentialsId: 'github-ssh-key',
                     branch: 'master'
-                }
-                sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+                    sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
             }
         }
 
@@ -25,8 +24,11 @@ pipeline {
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
             }
             steps {
-                sh 'terraform init -input=false'
-                sh 'terraform workspace select dev'
+                sh '''
+                cd terraform
+                terraform init -input=false
+                terraform workspace select dev
+                '''
             }
         }
         stage('Provision infrastructure (plan)') {
