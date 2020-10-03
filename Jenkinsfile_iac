@@ -3,28 +3,31 @@ pipeline {
   agent {
     label "master"
   }
+  environment {
+      AWS_CRED=credentials('AWS-pipeline')
+      AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
+      AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
+      AWS_EC2_KEY = credentials('wibob-Frankfurt-file')
+  }
 
-    stages {
-        stage ('checkout git') {
-            steps {
-                    git url: 'git@github.com:briukhanov/epam_lab_final.git',
-                    credentialsId: 'github-ssh-key',
-                    branch: 'master'
-                    sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
-            }
-        }
+  stages {
+        // stage ('checkout git') {
+        //     steps {
+        //             git url: 'git@github.com:briukhanov/epam_lab_final.git',
+        //             credentialsId: 'github-ssh-key',
+        //             branch: 'master'
+        //             sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+        //     }
+        // }
 
         stage('Check Terraform version') {
             steps {
-               sh 'terraform --version'
+              sh 'll'
+              sh 'terraform --version'
             }
         }
         stage('Provision infrastructure (init)') {
-            environment {
-                AWS_CRED=credentials('AWS-pipeline')
-                AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
-                AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
-            }
+
             steps { dir ('terraform') {
                 sh '''
                 terraform init -input=false
@@ -34,19 +37,13 @@ pipeline {
             }
         }
         stage('Provision infrastructure (plan)') {
-            environment {
-                AWS_CRED=credentials('AWS-pipeline')
-                AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
-                AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
-                AWS_EC2_KEY = credentials('wibob-Frankfurt-file')
-            }
+
             steps { dir ('terraform') {
 
-                sh 'echo "$AWS_EC2_KEY"'
-                sh 'cat `$AWS_EC2_KEY`'
-                cp $AWS_EC2_KEY ../aws.pem
+                sh 'echo $AWS_EC2_KEY'
+                sh 'cat $AWS_EC2_KEY'
+                sh 'cp $AWS_EC2_KEY ../aws.pem'
                 sh 'terraform plan -out=tfplan -input=false'
-
               }
             }
         }
