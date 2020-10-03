@@ -44,43 +44,22 @@
     mode: 0644
   notify: Restart Postgres
 
-  # listen_addresses	‘*’
-  # port	5432
-  # max_connections = 100
+- name: Add a auth method
+  lineinfile:
+    path: /etc/postgresql/10/main/pg_hba.conf
+    line: host    all         all         0.0.0.0/0             password
 
+- name: Create user
+  community.general.postgresql_user:
+    name: biotestdb
+    password: "secret38"
 
-- name: Run a script
-  script: /tmp/init_postgresql.sh
-
-
-
-# COPY docker-healthcheck /usr/local/bin/
-# HEALTHCHECK CMD ["docker-healthcheck"]
-# ENTRYPOINT ["docker-entrypoint.sh"]
-# EXPOSE 5432
-#
-# RUN chmod 777 /opt
-#
-# CMD ["postgres", "-c", "config_file=/opt/postgresql.conf", "-p", "5432"]
+- name: Create user ubuntu
+  community.general.postgresql_user:
+    name: ubuntu
 
 
 #
-#     - name: Enables new site
-#       file:
-#         src: "/etc/nginx/sites-available/{{ nginx_http_conf }}"
-#         dest: "/etc/nginx/sites-enabled/{{ nginx_http_conf }}"
-#         state: link
-#       notify: Reload Nginx
+# - name: Run a script
+#   script: /tmp/init_postgresql.sh
 #
-#     - name: Removes "default" site
-#       file:
-#         path: "/etc/nginx/sites-enabled/default"
-#         state: absent
-#       notify: Reload Nginx
-#
-# # UFW Configuration
-#     - name: "UFW - Allow HTTP on port {{ nginx_http_port }}"
-#       ufw:
-#         rule: allow
-#         port: "{{ nginx_http_port }}"
-#         proto: tcp
