@@ -7,7 +7,7 @@ pipeline {
       AWS_CRED=credentials('AWS-pipeline')
       AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
       AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
-      AWS_EC2_KEY = credentials('wibob-Frankfurt-file')
+      TF_VAR_private_key_ec2 = credentials('wibob-Frankfurt-file')
   }
 
   stages {
@@ -22,7 +22,6 @@ pipeline {
 
         stage('Check Terraform version') {
             steps {
-              sh 'ls -l'
               sh 'terraform --version'
             }
         }
@@ -40,9 +39,7 @@ pipeline {
 
             steps { dir ('terraform') {
 
-                sh 'echo $AWS_EC2_KEY'
-                sh 'cat $AWS_EC2_KEY'
-                sh 'cp $AWS_EC2_KEY ../aws.pem'
+                sh 'cp $TF_VAR_private_key_ec2 ../aws.pem'
                 sh 'terraform plan -out=tfplan -input=false'
               }
             }
