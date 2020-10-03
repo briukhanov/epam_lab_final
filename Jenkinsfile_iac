@@ -49,8 +49,6 @@ pipeline {
             steps { dir ('terraform') {
 
                 sh 'terraform apply -auto-approve -input=false tfplan'
-
-            }
                 sshagent(credentials : ['wibob-Frankfurt-ubuntu']) {
                 sh '''
                 DOCKER_DNS=`terraform output docker_server_public_dns`
@@ -65,7 +63,8 @@ pipeline {
                 '''
                 }
               }
-        }
+            }
+          }
 
    }
 }
