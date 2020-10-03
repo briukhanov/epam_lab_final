@@ -49,6 +49,10 @@
     path: /etc/postgresql/10/main/pg_hba.conf
     line: host    all         all         0.0.0.0/0             password
 
+- name: Install Gallaxy Collections
+  shell: ansible-galaxy collection install community.general
+
+
 - name: Create user
   community.general.postgresql_user:
     name: biotestdb
