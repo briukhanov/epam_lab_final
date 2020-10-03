@@ -1,10 +1,7 @@
 ---
-# - name: Add postgres repository
-#   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main' state=present
-#
-# - name: Add postgres repository key
-#   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
 
+- name: Install Gallaxy Collections
+  shell: ansible-galaxy collection install community.general
 
 - name: Install postgresql
   apt: pkg=postgresql state=present force=yes
@@ -49,8 +46,6 @@
     path: /etc/postgresql/10/main/pg_hba.conf
     line: host    all         all         0.0.0.0/0             password
 
-- name: Install Gallaxy Collections
-  shell: ansible-galaxy collection install community.general
 
 
 - name: Create user
