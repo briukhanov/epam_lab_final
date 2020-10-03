@@ -1,7 +1,7 @@
 ---
 
-- name: Install Gallaxy Collections
-  shell: ansible-galaxy collection install community.general
+# - name: Install Gallaxy Collections
+#   shell: ansible-galaxy collection install community.general
 
 - name: Install postgresql
   apt: pkg=postgresql state=present force=yes
@@ -48,14 +48,14 @@
 
 
 
-- name: Create user
-  community.general.postgresql_user:
-    name: biotestdb
-    password: "secret38"
-
-- name: Create user ubuntu
-  community.general.postgresql_user:
-    name: ubuntu
+# - name: Create user
+#   community.general.postgresql_user:
+#     name: biotestdb
+#     password: "secret38"
+#
+# - name: Create user ubuntu
+#   community.general.postgresql_user:
+#     name: ubuntu
 
 
 #
