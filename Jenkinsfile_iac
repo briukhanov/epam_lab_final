@@ -22,7 +22,7 @@ pipeline {
 
         stage('Check Terraform version') {
             steps {
-              sh 'll'
+              sh 'ls -l'
               sh 'terraform --version'
             }
         }
