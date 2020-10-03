@@ -65,7 +65,7 @@ pipeline {
                 sh '''
                 DOCKER_DNS=`terraform output docker_server_public_dns`
                 APP_DNS=`terraform output web_server_public_dns`
-                echo "Jenkins address: http://$DOCKER_DNS"
+                echo Jenkins address: http://$DOCKER_DNS
                 echo "Initial Admin password for Jenkins:"
                 ssh -o StrictHostKeyChecking=no ubuntu@$DOCKER_DNS "sudo docker exec Jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
                 echo --------------------------------------------
