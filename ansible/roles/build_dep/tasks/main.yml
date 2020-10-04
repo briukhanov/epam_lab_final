@@ -1,115 +1,43 @@
-# - name: Installing DateTime
-#   command: cpan install DateTime
-# - name: Installing Module::Find
-#   command: cpan install Module::Find
-# - name: Installing Web::Scraper
-#   command: cpan install Web::Scraper
-# - name: Installing Ouch
-#   command: cpan install Ouch
-# - name: Installing Number::Format
-#   command: cpan install Number::Format
-# - name: Installing PerlIO::gzip
-#   command: cpan install PerlIO::gzip
-# - name: Installing Perl6::Junction
-#   command: cpan install Perl6::Junction
-# - name: Installing List::MoreUtils
-#   command: cpan install List::MoreUtils
-# - name: Installing LWP
-#   command: cpan install LWP
-# - name: Installing Module::Find
-#   command: cpan install Module::Find
-# - name: Installing Moose
-#   command: cpan install Moose
-# - name: Installing MooseX::Role::WithOverloading
-#   command: cpan install MooseX::Role::WithOverloading
-# - name: Installing MooseX::Types
-#   command: cpan install MooseX::Types
-# - name: Installing Text::CSV_XS
-#   command: cpan install Text::CSV_XS
-# - name: Installing URI
-#   command: cpan install URI
-# - name: Installing XML::Parser::PerlSAX
-#   command: cpan install XML::Parser::PerlSAX
-# - name: Installing XML::DOM
-#   command: cpan install XML::DOM
-# - name: Installing Text::Glob
-#   command: cpan install Text::Glob
-# - name: Installing MooseX::FollowPBP
-#   command: cpan install MooseX::FollowPBP
-# - name: Installing MooseX::ABC
-#   command: cpan install MooseX::ABC
-# - name: Installing MooseX::FileAttribute
-#   command: cpan install MooseX::FileAttribute
 
-- name: Installing
-  command: cpan App::cpanminus
-
-
-# - name: Copy and Execute the script
-#   script: ./roles/build_dep/files/perl_lib.sh
 
 - name: Installing Maven
   apt: name=maven state=present update_cache=yes
-
-
 
 - name: install Perl_dep
   apt: name={{ item }} state=latest update_cache=yes
   loop: [ 'gcc', 'make', 'libexpat1-dev']
 
+- name: Installing
+  command: cpan App::cpanminus
 
-  # with_items:
-  #   - App::cpaminus
-  #   - DateTime
-  #   - Module::Find
-  #   - Web::Scraper
-  #   - Ouch
-  #   - Number::Format
-  #   - PerlIO::gzip
-  #   - Perl6::Junction
-  #   - List::MoreUtils
-  #   - LWP
-  #   - Module::Find
-  #   - Moose
-  #   - MooseX::Role::WithOverloading
-  #   - MooseX::Types
-  #   - Text::CSV_XS
-  #   - URI
-  #   - XML::Parser::PerlSAX
-  #   - XML::DOM
-  #   - Text::Glob
-  #   - MooseX::FollowPBP
-  #   - MooseX::ABC
-  #   - MooseX::FileAttribute
+- name: Set mode +x to PerlModule Script
+- file:
+    path: ~/ansible/roles/build_dep/files/perl_lib.sh
+    mode: 0755
 
-#
-# - name: Install Perl lib dependencies
-#   apt:
-#     name: {{item}}
-#     state: present
-#   with_items:
-#     - libdatetime-perl
-#     - libmodule-find-perl
-#     - libweb-scraper-perl
-#     - libouch-perl
-#     - libnumber-format-perl
-#     - libperlio-gzip-perl
-#     - libperl6-junction-perl
-#     - liblist-moreutils-perl
-#     - liblwp-perl
-#     - libmodule-find-perl
-#     - libmoose-perl
-#     - libmoosex-role-withoverloading-perl
-#     - libmoosex-types-perl
-#     - libtext-csv_xs-perl
-#     - liburi-perl
-#     - libxml-parser-perlsax-perl
-#     - libxml-dom-perl
-#     - libtext-glob-perl
-#     - libmoosex-followpbp-perl
-#     - libmoosex-abc-perl
-#     - libmoosex-fileattribute-perl
-#     - libgetopt-std-perl
-#     - liblog-handler-perl
-#     - libdigest-md5-perl
-#
+- name: create directory for project
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+  loop:
+    - ~/git
+    - ~/.intermine
+
+- name: Set mode +x to StartUp Script
+  file:
+    path: ~/ansible/roles/build_dep/files/startup.sh
+    mode: 0755
+
+- name: deploy testmine.properties files
+  template:
+    src: biotestmine.properties
+    dst: ~/.intermine
+    mode: 0664
+
+- name: Copy and Execute the script
+  script: ./roles/build_dep/files/startup.sh
+
+
+# - name: Copy and Execute the script
+#   script: ./roles/build_dep/files/perl_lib.sh

@@ -5,8 +5,10 @@ https_port: 8443
 admin_username: admin
 admin_password: adminsecret
 
+psql_user: biotestdb
+psql_pwd: secret38
 
 create_containers: 1
 default_container_name: jenkins2
 default_container_image: jenkins/jenkins
-default_container_command: 
+default_container_command:
