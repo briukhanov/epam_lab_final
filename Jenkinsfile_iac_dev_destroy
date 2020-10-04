@@ -4,15 +4,15 @@ pipeline {
 
     stages {
 
-      stage ('checkout git') {
-          steps {
-                  git url: 'git@github.com:briukhanov/epam_lab_final.git',
-                  credentialsId: 'github-ssh-key',
-                  branch: 'master'
-                  sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
-          }
-
-      }
+      // stage ('checkout git') {
+      //     steps {
+      //             git url: 'git@github.com:briukhanov/epam_lab_final.git',
+      //             credentialsId: 'github-ssh-key',
+      //             branch: 'master'
+      //             sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+      //     }
+      //
+      // }
       stage ('Check Terraform version') {
           steps {
                sh 'terraform --version'
