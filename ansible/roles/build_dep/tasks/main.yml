@@ -32,8 +32,11 @@
 - name: deploy testmine.properties files
   template:
     src: "biotestmine.properties.j2"
-    dst: "../.intermine/biotestmine.properties"
+    dst: "/tmp/biotestmine.properties"
     mode: 0664
+
+- name: Move testmine.properties to a proper destination
+  shell: mv /tmp/biotestmine.properties ~/.intermine
 
 - name: Copy and Execute the script
   script: ./roles/build_dep/files/startup.sh
