@@ -11,7 +11,7 @@
   command: cpan App::cpanminus
 
 - name: Set mode +x to PerlModule Script
-- file:
+  file:
     path: ~/ansible/roles/build_dep/files/perl_lib.sh
     mode: 0755
 
