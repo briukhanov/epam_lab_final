@@ -5,7 +5,7 @@ pipeline {
   }
   options {
        buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '7'))
-
+     }
   environment {
 
   }
@@ -13,7 +13,7 @@ pipeline {
   stages {
         stage ('checkout biotestintermine git') {
             steps {
-                    git url: 'git@github.com:briukhanov/intermine.git',
+                    git url: 'https://github.com/briukhanov/intermine.git',
                     // credentialsId: 'github-ssh-key',
                     branch: 'master'
                     sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
@@ -35,3 +35,5 @@ pipeline {
               sh 'echo Deploy complete'
             }
         }
+      }
+    }
