@@ -3,6 +3,9 @@ pipeline {
   agent {
     label "master"
   }
+  options {
+       buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '7'))
+
   environment {
       AWS_CRED=credentials('AWS-pipeline')
       AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"

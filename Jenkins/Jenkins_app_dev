@@ -1,0 +1,37 @@
+pipeline {
+
+  agent {
+    label "master"
+  }
+  options {
+       buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '7'))
+
+  environment {
+
+  }
+
+  stages {
+        stage ('checkout biotestintermine git') {
+            steps {
+                    git url: 'git@github.com:briukhanov/intermine.git',
+                    // credentialsId: 'github-ssh-key',
+                    branch: 'master'
+                    sh 'echo "Build by Jenkins Build# $BUILD_ID" >> ./build_id.txt'
+            }
+        }
+
+        stage('Build') {
+            steps {
+              sh 'echo Build complete'
+            }
+        }
+        stage('Test') {
+            steps {
+              sh 'echo Test complete'
+            }
+        }
+        stage('Deploy') {
+            steps {
+              sh 'echo Deploy complete'
+            }
+        }

@@ -19,6 +19,8 @@
   file:
     path: "{{ item }}"
     state: directory
+    user: ubuntu
+    group: ubuntu
     mode: 0775
   loop:
     - ~/git
@@ -31,7 +33,7 @@
 
 - name: deploy testmine.properties files
   template: src=biotestmine.properties.j2 dest=/tmp/biotestmine.properties
-    
+
 - name: Move testmine.properties to a proper destination
   shell: mv /tmp/biotestmine.properties ~/.intermine
 
