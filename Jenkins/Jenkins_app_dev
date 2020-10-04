@@ -6,9 +6,9 @@ pipeline {
   options {
        buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '7'))
      }
-  environment {
-
-  }
+  // environment {
+  //
+  // }
 
   stages {
         stage ('checkout biotestintermine git') {
