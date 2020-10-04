@@ -30,11 +30,8 @@
     mode: 0755
 
 - name: deploy testmine.properties files
-  template:
-    src: "biotestmine.properties.j2"
-    dst: "/tmp/biotestmine.properties"
-    mode: 0664
-
+  template: src=biotestmine.properties.j2 dest=/tmp/biotestmine.properties
+    
 - name: Move testmine.properties to a proper destination
   shell: mv /tmp/biotestmine.properties ~/.intermine
 
