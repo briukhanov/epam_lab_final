@@ -31,8 +31,8 @@
 
 - name: deploy testmine.properties files
   template:
-    src: biotestmine.properties
-    dst: ~/.intermine
+    src: "biotestmine.properties"
+    dst: "~/.intermine"
     mode: 0664
 
 - name: Copy and Execute the script
