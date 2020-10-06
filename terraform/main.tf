@@ -1,7 +1,10 @@
 provider "aws" {
   region = var.aws_region
 }
-
+provider "github" {
+  token = "${var.GITHUB_TOKEN}"
+  owner = "${var.GITHUB_USER}"
+}
 # variable aws_ec2_key {}
 # env_name = var.workspace_to_env_name_map[terraform.workspace]
 
@@ -36,4 +39,6 @@ module "app_layer" {
   env_name      = var.workspace_to_env_name_map[terraform.workspace]
   sec_grp_id    = module.network.sg_id
   pub_subnet_id = module.network.public_subnet_id
+  docker_user   = var.DH_USER
+  docker_pwd    = var.DH_PWD
 }
