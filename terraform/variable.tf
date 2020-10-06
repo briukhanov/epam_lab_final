@@ -1,6 +1,9 @@
 # AWS Region Where Resources Will be Created
 variable "aws_region" { default = "eu-central-1" }
 variable "private_key_ec2" {}
+variable "DH_USER" {}
+variable "DH_PWD" {}
+
 
 # { default = "../aws.pem" }
 
