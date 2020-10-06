@@ -19,7 +19,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    user: ubuntu
+    owner: ubuntu
     group: ubuntu
     mode: 0775
   loop:

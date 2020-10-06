@@ -2,8 +2,8 @@ provider "aws" {
   region = var.aws_region
 }
 provider "github" {
-  token = "${var.GITHUB_TOKEN}"
-  owner = "${var.GITHUB_USER}"
+  token = var.GITHUB_TOKEN
+  owner = var.GITHUB_USER
 }
 # variable aws_ec2_key {}
 # env_name = var.workspace_to_env_name_map[terraform.workspace]
