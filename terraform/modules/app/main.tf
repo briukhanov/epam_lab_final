@@ -85,6 +85,9 @@ resource "aws_instance" "docker_instance" {
 
   provisioner "remote-exec" {
     inline = [
+      "export DOCKER_USER=${(var.docker_user)}",
+      "export DOCKER_PWD=${(var.docker_pwd)}",
+      "echo $DOCKER_USER"
       "sudo apt-add-repository -y ppa:ansible/ansible",
       "sudo apt -y update",
       "sudo apt -y aptitude",

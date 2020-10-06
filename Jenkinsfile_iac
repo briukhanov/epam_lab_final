@@ -11,6 +11,12 @@ pipeline {
       AWS_ACCESS_KEY_ID = "${env.AWS_CRED_USR}"
       AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
       TF_VAR_private_key_ec2 = credentials('wibob-Frankfurt-file')
+      DOCKERHUB_CRED = credentials('DockerHub-wibob')
+      TF_VAR_DH_USER = "${env.DOCKERHUB_CRED_USR}"
+      TF_VAR_DH_PWD = "${env.DOCKERHUB_CRED_PWD}"
+      GITHUB_TOKEN=credentials('repohook')
+      TF_VAR_GITHUB_USER = "${env.GITHUB_TOKEN_USR}"
+      TF_VAR_GITHUB_TOKEN = "${env.GITHUB_TOKEN_PWD}"
   }
 
   stages {

@@ -60,3 +60,11 @@ variable "pub_subnet_id" {
 # variable "aws_ec2_key" {
 #   description = ""
 # }
+variable "docker_user" {
+  type        = string
+  description = ""
+}
+variable "docker_pwd" {
+  type        = string
+  description = ""
+}
