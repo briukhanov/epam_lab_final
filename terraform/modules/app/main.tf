@@ -107,7 +107,7 @@ resource "aws_instance" "docker_instance" {
   #   private_key = file(var.private_key_ec2)
   #   # private_key = var.aws_ec2_key
   # }
-  user_data = "${file("init_docker_inst.sh")}"
+  user_data = file("init_docker_inst.sh")
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
   # ]
