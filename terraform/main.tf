@@ -25,6 +25,15 @@ module "network" {
   # public_subnet_cidr =
   # route_table_cidr =
   web_ports = ["22", "8080", "443"]
+
+  resource "null_resource" "export_variable" {
+    provisioner "local-exec" {
+      command = echo ${var.DH_USER}
+      command = echo ${var.DH_PWD}
+    }
+  }
+
+
 }
 
 module "app_layer" {

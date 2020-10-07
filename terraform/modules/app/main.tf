@@ -77,7 +77,7 @@ data "template_file" "init_docker_instance" {
 
 resource "null_resource" "export_rendered_template" {
   provisioner "local-exec" {
-    command = "cat > test_output.json <<EOL\n${data.template_file.init_docker_instance.rendered}\nEOL"
+    command = "cat > test_output.sh <<EOL\n${data.template_file.init_docker_instance.rendered}\nEOL"
   }
 }
 
