@@ -75,6 +75,12 @@ data "template_file" "init_docker_instance" {
   }
 }
 
+resource "null_resource" "export_rendered_template" {
+  provisioner "local-exec" {
+    command = "cat > test_output.json <<EOL\n${data.template_file.init_docker_instance.rendered}\nEOL"
+  }
+}
+
 resource "aws_instance" "docker_instance" {
   ami                    = lookup(var.ec2_images, var.aws_region)
   instance_type          = var.docker_instance_type
@@ -87,7 +93,7 @@ resource "aws_instance" "docker_instance" {
   volume_tags = {
     Name = "${(var.cluster_name)}_${(var.env_name)}_docker_instance_volume"
   }
-  user_data = data.template_file.init_docker_instance.rendered
+  # user_data = data.template_file.init_docker_instance.rendered
   # provisioner "file" {
   #   source      = "../ansible"
   #   destination = "/tmp"
