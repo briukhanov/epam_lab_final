@@ -24,7 +24,7 @@
 
 
 - name: ----------------!!!!!!!!!!!!!!-------------------
-  shell: "echo {{ docker_user }} > ansible_vars.txt"
+  shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
 
 - name: debug env DOCKER_USER
   debug:
@@ -35,11 +35,11 @@
     var: docker_user
     verbosity: 2
 
-- name: Log into DockerHub
-  docker_login:
-    username: "{{ docker_user }}"
-    password: "{{ docker_pwd }}"
-    email: a.briukhanov@gmail.com
+# - name: Log into DockerHub
+#   docker_login:
+#     username: "{{ docker_user }}"
+#     password: "{{ docker_pwd }}"
+#     email: a.briukhanov@gmail.com
 
 # - name: Pull default Docker image
 #   docker_image:
