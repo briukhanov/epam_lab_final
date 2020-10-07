@@ -101,21 +101,24 @@ resource "aws_instance" "docker_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "DOCKER_USER=${(var.docker_user)}",
-      "DOCKER_PWD=${(var.docker_pwd)}",
+      "export DOCKER_USER=${(var.docker_user)}",
+      "export DOCKER_PWD=${(var.docker_pwd)}",
       "echo $DOCKER_USER",
       "sudo apt-add-repository -y ppa:ansible/ansible",
       "sudo apt -y update",
       "sudo apt -y aptitude",
       "sudo apt -y install ansible",
       "sudo ansible --version",
-      "cd ~" ,
+      "cd ~",
       "git clone https://github.com/briukhanov/epam_lab_final.git",
       # "mv /tmp/ansible ~/",
       "cd ~/ansible",
-      "sudo ansible-playbook site.yml --tags docker --extra-vars '{"docker_user":"$DOCKER_USER","docker_pwd":"$DOCKER_PWD"}'"
-          ]
+      "sudo ansible-playbook site.yml --tags docker"
+    ]
   }
+
+  # --extra-vars '{"docker_user":"$DOCKER_USER","docker_pwd":"$DOCKER_PWD"}'
+
 
   connection {
     type        = "ssh"
