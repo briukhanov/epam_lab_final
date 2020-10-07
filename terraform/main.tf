@@ -27,11 +27,11 @@ module "network" {
   web_ports = ["22", "8080", "443"]
 }
 
-resource "null_resource" "export_variable" {
-  provisioner "local-exec" {
-    command = "echo ${var.DH_USER} > vars.txt && echo ${var.DH_PWD} >> vars.txt && ${var.GITHUB_TOKEN} >> vars.txt && ${var.GITHUB_USER} >> vars.txt"
-  }
-}
+# resource "null_resource" "export_variable" {
+#   provisioner "local-exec" {
+#     command = "echo ${var.DH_USER} > vars.txt && echo ${var.DH_PWD} >> vars.txt && ${var.GITHUB_TOKEN} >> vars.txt && ${var.GITHUB_USER} >> vars.txt"
+#   }
+# }
 
 module "app_layer" {
   source                      = "./modules/app"
