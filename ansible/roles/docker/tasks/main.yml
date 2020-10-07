@@ -27,13 +27,14 @@
   shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
 
 - name: debug env DOCKER_USER
-  debug:
-    msg: "'{{ lookup('env', 'DOCKER_USER') }}' is the DOCKER_USER environment variable."
-
-- name: debug docker_user
-  debug:
-    var: docker_user
-    verbosity: 2
+  shell: "echo $DOCKER_USER $DOCKER_PWD > shell.var.txt"
+#   debug:
+#     msg: "'{{ lookup('env', 'DOCKER_USER') }}' is the DOCKER_USER environment variable."
+#
+# - name: debug docker_user
+#   debug:
+#     var: docker_user
+#     verbosity: 2
 
 # - name: Log into DockerHub
 #   docker_login:
