@@ -92,7 +92,7 @@ resource "aws_instance" "docker_instance" {
       "sudo apt -y update",
       "sudo apt -y aptitude",
       "sudo apt -y install ansible",
-      "sudo ansible --version",
+      'sudo ansible --version',
       # "mkdir ~/ansible && mkdir ~/ansible/group_vars",
       # "mv /tmp/all.yml ~/ansible/group_vars/all.yml",
       # "mv /tmp/site.yml ~/ansible/site.yml",
@@ -100,12 +100,8 @@ resource "aws_instance" "docker_instance" {
       # "sudo ansible-playbook site.yml",
       "mv /tmp/ansible ~/",
       "cd ~/ansible",
-      "sudo ansible-playbook site.yml --tags docker"
-      # "sudo docker exec Jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
-      # "cd ~ && rm -Rf ./ansible",
-      # "ls"
-
-    ]
+      'sudo ansible-playbook site.yml --tags docker --extra-vars "docker_user=${(var.docker_user)} docker_pwd=${(var.docker_pwd)}"'
+          ]
   }
 
   connection {
