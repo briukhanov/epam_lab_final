@@ -66,6 +66,15 @@ resource "aws_instance" "web_instance" {
 
 }
 
+
+data "template_file" "init_docker_instance" {
+  template = file("../init_docker_inst.sh")
+  vars = {
+    dock_user =  ${(var.docker_user)}
+    dock_pwd = ${(var.docker_pwd)}
+  }
+}
+
 resource "aws_instance" "docker_instance" {
   ami                    = lookup(var.ec2_images, var.aws_region)
   instance_type          = var.docker_instance_type
@@ -78,6 +87,7 @@ resource "aws_instance" "docker_instance" {
   volume_tags = {
     Name = "${(var.cluster_name)}_${(var.env_name)}_docker_instance_volume"
   }
+  user_data = data.template_file.init_docker_instance.rendered
   # provisioner "file" {
   #   source      = "../ansible"
   #   destination = "/tmp"
@@ -107,7 +117,7 @@ resource "aws_instance" "docker_instance" {
   #   private_key = file(var.private_key_ec2)
   #   # private_key = var.aws_ec2_key
   # }
-  user_data = file("init_docker_inst.sh")
+
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
   # ]
