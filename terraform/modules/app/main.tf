@@ -101,8 +101,6 @@ resource "aws_instance" "docker_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "export DOCKER_USER=${(var.docker_user)}",
-      "export DOCKER_PWD=${(var.docker_pwd)}",
       "sudo apt-add-repository -y ppa:ansible/ansible",
       "sudo apt -y update",
       "sudo apt -y aptitude",
@@ -112,10 +110,13 @@ resource "aws_instance" "docker_instance" {
       "git clone https://github.com/briukhanov/epam_lab_final.git",
       # "mv /tmp/ansible ~/",
       "cd ~/epam_lab_final/ansible",
-      "echo $DOCKER_USER $DOCKER_PWD",
-      "echo $DOCKER_USER $DOCKER_PWD > env.txt",
       "echo --------------------------------------------------------------",
-      "sudo ansible-playbook site.yml --tags docker"
+      "sudo ansible-playbook site.yml --tags docker",
+      "export DOCKER_USER=${(var.docker_user)}",
+      "export DOCKER_PWD=${(var.docker_pwd)}",
+      "echo $DOCKER_USER $DOCKER_PWD > env.txt",
+      "sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
+      "sudo docker run -p 8080:8080 -p 50000:50000 wibob/intermine_dev_jenk:dev3"
     ]
   }
 
