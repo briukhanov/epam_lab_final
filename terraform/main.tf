@@ -29,8 +29,7 @@ module "network" {
 
 resource "null_resource" "export_variable" {
   provisioner "local-exec" {
-    command = "echo ${var.DH_USER} >> vars.txt"
-    command = "echo ${var.DH_PWD} >> vars.txt"
+    command = "echo ${var.DH_USER} >> vars.txt && echo ${var.DH_PWD} >> vars.txt"
   }
 }
 
