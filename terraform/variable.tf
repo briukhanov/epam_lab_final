@@ -3,7 +3,8 @@ variable "aws_region" { default = "eu-central-1" }
 variable "private_key_ec2" {}
 variable "DH_USER" {}
 variable "DH_PWD" {}
-
+variable "GITHUB_TOKEN" {}
+variable "GITHUB_USER" {}
 
 # { default = "../aws.pem" }
 
