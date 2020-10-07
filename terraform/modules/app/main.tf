@@ -68,7 +68,7 @@ resource "aws_instance" "web_instance" {
 
 
 data "template_file" "init_docker_instance" {
-  template = file("../init_docker_inst.sh")
+  template = file("../init_docker_inst.sh.tpl")
   vars = {
     dock_user = var.docker_user
     dock_pwd  = var.docker_pwd
