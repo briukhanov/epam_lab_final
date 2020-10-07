@@ -22,9 +22,6 @@
   pip:
     name: docker
 
-vars:
-  docker_user: "{{ lookup('env', 'DOCKER_USER') }}"
-  docker_pwd: "{{ lookup('env', 'DOCKER_PWD') }}"
 
 - name: ----------------!!!!!!!!!!!!!!-------------------
   command: echo {{ docker_user }}
