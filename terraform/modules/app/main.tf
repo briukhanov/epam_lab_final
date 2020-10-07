@@ -99,30 +99,32 @@ resource "aws_instance" "docker_instance" {
   #   destination = "/tmp"
   # }
 
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "export DOCKER_USER=${(var.docker_user)}",
-  #     "export DOCKER_PWD=${(var.docker_pwd)}",
-  #     "echo $DOCKER_USER",
-  #     "sudo apt-add-repository -y ppa:ansible/ansible",
-  #     "sudo apt -y update",
-  #     "sudo apt -y aptitude",
-  #     "sudo apt -y install ansible",
-  #     "sudo ansible --version",
-  #     "mv /tmp/ansible ~/",
-  #     "cd ~/ansible",
-  #     "sudo ansible-playbook site.yml --tags docker --extra-vars '{"docker_user":"${(var.docker_user)}","docker_pwd":"${(var.docker_pwd)}"}'"
-  #         ]
-  # }
+  provisioner "remote-exec" {
+    inline = [
+      "DOCKER_USER=${(var.docker_user)}",
+      "DOCKER_PWD=${(var.docker_pwd)}",
+      "echo $DOCKER_USER",
+      "sudo apt-add-repository -y ppa:ansible/ansible",
+      "sudo apt -y update",
+      "sudo apt -y aptitude",
+      "sudo apt -y install ansible",
+      "sudo ansible --version",
+      "cd ~" ,
+      "git clone https://github.com/briukhanov/epam_lab_final.git",
+      # "mv /tmp/ansible ~/",
+      "cd ~/ansible",
+      "sudo ansible-playbook site.yml --tags docker --extra-vars '{"docker_user":"$DOCKER_USER","docker_pwd":"$DOCKER_PWD"}'"
+          ]
+  }
 
-  # connection {
-  #   type        = "ssh"
-  #   user        = "ubuntu"
-  #   password    = ""
-  #   host        = self.public_ip
-  #   private_key = file(var.private_key_ec2)
-  #   # private_key = var.aws_ec2_key
-  # }
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    password    = ""
+    host        = self.public_ip
+    private_key = file(var.private_key_ec2)
+    # private_key = var.aws_ec2_key
+  }
 
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
