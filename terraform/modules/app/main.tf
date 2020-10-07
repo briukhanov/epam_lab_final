@@ -103,7 +103,6 @@ resource "aws_instance" "docker_instance" {
     inline = [
       "export DOCKER_USER=${(var.docker_user)}",
       "export DOCKER_PWD=${(var.docker_pwd)}",
-      "echo $DOCKER_USER",
       "sudo apt-add-repository -y ppa:ansible/ansible",
       "sudo apt -y update",
       "sudo apt -y aptitude",
@@ -113,6 +112,9 @@ resource "aws_instance" "docker_instance" {
       "git clone https://github.com/briukhanov/epam_lab_final.git",
       # "mv /tmp/ansible ~/",
       "cd ~/epam_lab_final/ansible",
+      "echo $DOCKER_USER $DOCKER_PWD",
+      "echo $DOCKER_USER $DOCKER_PWD > env.txt",
+      "echo --------------------------------------------------------------",
       "sudo ansible-playbook site.yml --tags docker"
     ]
   }

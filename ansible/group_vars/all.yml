@@ -12,3 +12,6 @@ create_containers: 1
 default_container_name: jenkins2
 default_container_image: jenkins/jenkins
 default_container_command:
+
+docker_user: "{{ lookup('env', 'DOCKER_USER') }}"
+docker_pwd: "{{ lookup('env', 'DOCKER_PWD') }}"
