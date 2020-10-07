@@ -112,7 +112,7 @@ resource "aws_instance" "docker_instance" {
       "cd ~",
       "git clone https://github.com/briukhanov/epam_lab_final.git",
       # "mv /tmp/ansible ~/",
-      "cd ~/ansible",
+      "cd ~/epam_lab_final/ansible",
       "sudo ansible-playbook site.yml --tags docker"
     ]
   }
