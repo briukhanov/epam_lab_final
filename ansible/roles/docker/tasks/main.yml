@@ -24,7 +24,7 @@
 
 
 - name: ----------------!!!!!!!!!!!!!!-------------------
-  command: echo {{ docker_user }}
+  command: echo {{ docker_user }} > ansible_vars.txt
 
 - name: Log into DockerHub
   docker_login:
