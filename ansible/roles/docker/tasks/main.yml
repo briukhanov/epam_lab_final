@@ -23,11 +23,11 @@
     name: docker
 
 
-- name: ----------------!!!!!!!!!!!!!!-------------------
-  shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
-
-- name: debug env DOCKER_USER
-  shell: "echo $DOCKER_USER $DOCKER_PWD > shell.var.txt"
+# - name: ----------------!!!!!!!!!!!!!!-------------------
+#   shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
+#
+# - name: debug env DOCKER_USER
+#   shell: "echo $DOCKER_USER $DOCKER_PWD > shell.var.txt"
 #   debug:
 #     msg: "'{{ lookup('env', 'DOCKER_USER') }}' is the DOCKER_USER environment variable."
 #
@@ -47,18 +47,18 @@
 #     name: wibob/intermine_dev_jenk:dev3
 #     source: pull
 
-- name: Running Jenkins Image
-  docker_container:
-   name: "Jenkins"
-   image: wibob/intermine_dev_jenk:dev3
-   state: started
-   ports:
-     - "8080:8080"
-     - "50000:50000"
-
-
-- name: wait for Jenkins to start
-  wait_for: port=8080
+# - name: Running Jenkins Image
+#   docker_container:
+#    name: "Jenkins"
+#    image: wibob/intermine_dev_jenk:dev3
+#    state: started
+#    ports:
+#      - "8080:8080"
+#      - "50000:50000"
+#
+#
+# - name: wait for Jenkins to start
+#   wait_for: port=8080
 
 # # Creates the number of containers defined by the variable create_containers, using values from vars file
 # - name: Create default containers
