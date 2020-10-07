@@ -7,7 +7,7 @@ resource "github_repository_webhook" "biotestmine" {
   events     = ["push"]
 
   configuration {
-    url          = "http://${module.app_layer.aws_instance.docker_instance.public_dns}:8080/github-webhook/"
+    url          = "http://${module.app_layer.docker_server_address}:8080/github-webhook/"
     content_type = "form"
     insecure_ssl = false
   }
