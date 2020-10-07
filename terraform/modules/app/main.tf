@@ -78,10 +78,10 @@ resource "aws_instance" "docker_instance" {
   volume_tags = {
     Name = "${(var.cluster_name)}_${(var.env_name)}_docker_instance_volume"
   }
-  provisioner "file" {
-    source      = "../ansible"
-    destination = "/tmp"
-  }
+  # provisioner "file" {
+  #   source      = "../ansible"
+  #   destination = "/tmp"
+  # }
 
   # provisioner "remote-exec" {
   #   inline = [
@@ -99,28 +99,15 @@ resource "aws_instance" "docker_instance" {
   #         ]
   # }
 
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    password    = ""
-    host        = self.public_ip
-    private_key = file(var.private_key_ec2)
-    # private_key = var.aws_ec2_key
-  }
-  user_data = << EOF
-		#! /bin/bash
-     export DOCKER_USER=${(var.docker_user)}
-     export DOCKER_PWD=${(var.docker_pwd)}
-     echo $DOCKER_USER
-     sudo apt-add-repository -y ppa:ansible/ansible
-     sudo apt -y update
-     sudo apt -y aptitude
-     sudo apt -y install ansible
-     sudo ansible --version
-     mv /tmp/ansible ~/
-     cd ~/ansible
-     sudo ansible-playbook site.yml --tags docker --extra-vars '{"docker_user":"${(var.docker_user)}","docker_pwd":"${(var.docker_pwd)}"}'
-	EOF
+  # connection {
+  #   type        = "ssh"
+  #   user        = "ubuntu"
+  #   password    = ""
+  #   host        = self.public_ip
+  #   private_key = file(var.private_key_ec2)
+  #   # private_key = var.aws_ec2_key
+  # }
+  user_data = "${file("init_docker_inst.sh")}"
   # depends_on = [
   #   local_file.tf_ansible_vars_file_new
   # ]
