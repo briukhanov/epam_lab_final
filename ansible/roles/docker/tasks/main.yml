@@ -26,16 +26,25 @@
 - name: ----------------!!!!!!!!!!!!!!-------------------
   shell: "echo {{ docker_user }} > ansible_vars.txt"
 
+- name: debug env DOCKER_USER
+  debug:
+    msg: "'{{ lookup('env', 'DOCKER_USER') }}' is the DOCKER_USER environment variable."
+
+- name: debug docker_user
+  debug:
+    var: docker_user
+    verbosity: 2
+
 - name: Log into DockerHub
   docker_login:
     username: "{{ docker_user }}"
     password: "{{ docker_pwd }}"
     email: a.briukhanov@gmail.com
 
-- name: Pull default Docker image
-  docker_image:
-    name: wibob/intermine_dev_jenk:dev3
-    source: pull
+# - name: Pull default Docker image
+#   docker_image:
+#     name: wibob/intermine_dev_jenk:dev3
+#     source: pull
 
 - name: Running Jenkins Image
   docker_container:
