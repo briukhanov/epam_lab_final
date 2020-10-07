@@ -101,7 +101,6 @@ resource "aws_instance" "docker_instance" {
       "mv /tmp/ansible ~/",
       "cd ~/ansible",
       "sudo ansible-playbook site.yml --tags docker --extra-vars '{"docker_user":"${(var.docker_user)}","docker_pwd":"${(var.docker_pwd)}"}'"
-
           ]
   }
 
