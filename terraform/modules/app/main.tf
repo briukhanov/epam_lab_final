@@ -116,7 +116,7 @@ resource "aws_instance" "docker_instance" {
       "export DOCKER_PWD=${(var.docker_pwd)}",
       "echo $DOCKER_USER $DOCKER_PWD > env.txt",
       "sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
-      "sudo docker run -p 8080:8080 -p 50000:50000 wibob/intermine_dev_jenk:dev3"
+      "sudo docker run -d -p 8080:8080 -p 50000:50000 wibob/intermine_dev_jenk:dev3"
     ]
   }
 
