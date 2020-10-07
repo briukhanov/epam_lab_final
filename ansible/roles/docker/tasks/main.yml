@@ -26,12 +26,12 @@
   command: echo $DOCKER_USER
 
 - name: ----------------!!!!!!!!!!!!!!-------------------
-  command: echo {{docker_user}}
+  command: echo {{ docker_user }}
 
 - name: Log into DockerHub
   docker_login:
-    username: {{docker_user}}
-    password: {{docker_pwd}}
+    username: "{{ docker_user }}"
+    password: "{{ docker_pwd }}"
     email: a.briukhanov@gmail.com
 
 - name: Pull default Docker image
