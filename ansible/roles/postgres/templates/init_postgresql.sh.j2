@@ -16,8 +16,17 @@ echo appuser:x:$(id -g): >> group
 export LD_PRELOAD=/usr/lib/libnss_wrapper.so
 export NSS_WRAPPER_PASSWD=./passwd
 export NSS_WRAPPER_GROUP=./group #}
+export DB_ENCODING=UTF8
+export GRADLE_OPTS="-Dorg.gradle.daemon=false"
+{# cd ~/git #}
+{# git clone https://github.com/intermine/biotestmine #}
+{# cd biotestmine #}
+sudo -u postgres createuser --createdb -S -R ubuntu
+sudo -u postgres psql -c "create role {{ psql_user }} with login password '{{ psql_pwd }}';"
 
-sudo -u postgres psql <<-EOSQL
+
+
+{# sudo -u postgres psql <<-EOSQL
     update pg_database set datallowconn = TRUE where datname = 'template0';
     \c template0
     update pg_database set datistemplate = FALSE where datname = 'template1';
@@ -26,4 +35,4 @@ sudo -u postgres psql <<-EOSQL
     update pg_database set datistemplate = TRUE where datname = 'template1';
     \c template1
     update pg_database set datallowconn = FALSE where datname = 'template0';
-EOSQL
+EOSQL #}

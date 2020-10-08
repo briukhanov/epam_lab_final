@@ -9,13 +9,14 @@
 - name: Start postgresql server
   service: name=postgresql state=started enabled=yes
 
-# # Posgres Configuration
-# - name: Sets postgres conf file
-#   template:
-#     src: "postgresql.conf.j2"
-#     dest: "/etc/postgresql/10/main/postgresql.conf"
-#     mode: 0644
-#   notify: Restart Postgres
+# Posgres pg_hba
+- name: Sets postgres pg_hba.conf file
+  template:
+    src: "pg_hba.conf.j2"
+    dest: "/etc/postgresql/10/main/pg_hba.conf"
+    mode: 0644
+  notify: Restart Postgres
+
 - name: Configure global settings.
   lineinfile:
     dest: "/etc/postgresql/10/main/postgresql.conf"
@@ -41,23 +42,11 @@
     mode: 0644
   notify: Restart Postgres
 
-- name: Add a auth method
-  lineinfile:
-    path: /etc/postgresql/10/main/pg_hba.conf
-    line: host    all         all         0.0.0.0/0             password
-  notify: Restart Postgres
+# - name: Add a auth method
+#   lineinfile:
+#     path: /etc/postgresql/10/main/pg_hba.conf
+#     line: host    all         all         0.0.0.0/0             password
+#   notify: Restart Postgres
 
-# - name: Create user
-#   community.general.postgresql_user:
-#     name: biotestdb
-#     password: "secret38"
-#
-# - name: Create user ubuntu
-#   community.general.postgresql_user:
-#     name: ubuntu
-
-
-#
-# - name: Run a script
-#   script: /tmp/init_postgresql.sh
-#
+- name: Run a script
+  script: /tmp/init_postgresql.sh

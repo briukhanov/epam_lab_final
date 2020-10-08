@@ -1,7 +1,9 @@
-
-
+---
 - name: Installing Maven
   apt: name=maven state=present update_cache=yes
+
+- name: Install Gradle
+  apt: gradle
 
 - name: install Perl_dep
   apt: name={{ item }} state=latest update_cache=yes
