@@ -62,17 +62,17 @@ pipeline {
             }
           }
 
-        // stage('Install Perl Libs') {
-        //   steps { dir ('terraform') {
-        //     sshagent(credentials : ['wibob-Frankfurt-ubuntu']) {
-        //       sh '''
-        //       APP_DNS=`terraform output web_server_public_dns`
-        //       ssh -o StrictHostKeyChecking=no ubuntu@$APP_DNS "sudo ~/ansible/roles/build_dep/files/perl_lib.sh"
-        //       '''
-        //     }
-        //     }
-        //   }
-        // }
+        stage('Install Perl Libs') {
+          steps { dir ('terraform') {
+            sshagent(credentials : ['wibob-Frankfurt-ubuntu']) {
+              sh '''
+              APP_DNS=`terraform output web_server_public_dns`
+              ssh -o StrictHostKeyChecking=no ubuntu@$APP_DNS "sudo ~/ansible/roles/build_dep/files/perl_lib.sh"
+              '''
+            }
+            }
+          }
+        }
 
         stage('Put to log essential infrastructure info') {
           steps { dir ('terraform') {
