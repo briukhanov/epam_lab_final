@@ -1,6 +1,6 @@
 ---
 - name: Install Java
-  apt: name=openjdk-8-jdk
+  apt: name=openjdk-9-jdk
 
 - name: add group "tomcat"
   group: name=tomcat
@@ -44,9 +44,9 @@
 - name: systemd daemon-reload
   shell: systemctl daemon-reload
 
-- name: tomcat-8-start
+- name: tomcat-start
   service: name=tomcat state=started
   # enabled=yes
 
-# - name: wait for tomcat to start
-#   wait_for: port={{http_port}}
+- name: wait for tomcat to start
+  wait_for: port={{http_port}}
