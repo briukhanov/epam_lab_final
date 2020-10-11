@@ -38,16 +38,16 @@
     var: docker_user
     verbosity: 2
 
-# - name: Log into DockerHub
-#   docker_login:
-#     username: "{{ docker_user }}"
-#     password: "{{ docker_pwd }}"
-#     email: a.briukhanov@gmail.com
+- name: Log into DockerHub
+  docker_login:
+    username: "{{ docker_user }}"
+    password: "{{ docker_pwd }}"
+    email: a.briukhanov@gmail.com
 
-# - name: Pull default Docker image
-#   docker_image:
-#     name: wibob/intermine_dev_jenk:dev3
-#     source: pull
+- name: Pull default Docker image
+  docker_image:
+    name: "wibob/intermine_dev_jenk:{{env_name}}"
+    source: pull
 
 # - name: Running Jenkins Image
 #   docker_container:
