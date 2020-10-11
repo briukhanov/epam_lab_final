@@ -29,7 +29,7 @@ module "network" {
 
 # resource "null_resource" "export_variable" {
 #   provisioner "local-exec" {
-#     command = "echo ${var.DH_USER} > vars.txt && echo ${var.DH_PWD} >> vars.txt && ${var.GITHUB_TOKEN} >> vars.txt && ${var.GITHUB_USER} >> vars.txt"
+#     command = "echo '${var.DH_USER} \"Docker Hub User\"' > vars.txt && echo ${var.DH_PWD} >> vars.txt && ${var.GITHUB_TOKEN} >> vars.txt && ${var.GITHUB_USER} >> vars.txt"
 #   }
 # }
 

@@ -18,23 +18,23 @@
 - name: Update apt and install docker-ce
   apt: update_cache=yes name=docker-ce state=latest
 
-- name: Install Docker Module for Python
-  pip:
-    name: docker
+# - name: Install Docker Module for Python
+#   pip:
+#     name: docker
 
 
 # - name: ----------------!!!!!!!!!!!!!!-------------------
 #   shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
 #
-# - name: debug env DOCKER_USER
-#   shell: "echo $DOCKER_USER $DOCKER_PWD > shell.var.txt"
-#   debug:
-#     msg: "'{{ lookup('env', 'DOCKER_USER') }}' is the DOCKER_USER environment variable."
+- name: debug env DOCKER_USER
+  shell: "echo {{ docker_user }} > shell.var.txt"
+  debug:
+    msg: "'{{ lookup('env', 'DOCKER_USER') }}' is the DOCKER_USER environment variable."
 #
-# - name: debug docker_user
-#   debug:
-#     var: docker_user
-#     verbosity: 2
+- name: debug docker_user
+  debug:
+    var: docker_user
+    verbosity: 2
 
 # - name: Log into DockerHub
 #   docker_login:

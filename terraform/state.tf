@@ -2,8 +2,9 @@
 
 terraform {
   backend "s3" {
-    bucket = "epamweb-aws-jenkins-terraform"
-    key    = "final_lab/intermine-terraform.tfstate"
-    region = "eu-central-1"
+    bucket  = "epamweb-aws-jenkins-terraform"
+    key     = "final_lab/intermine-terraform.tfstate"
+    region  = "eu-central-1"
+    encrypt = true
   }
 }
