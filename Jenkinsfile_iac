@@ -38,7 +38,7 @@ pipeline {
 
             steps { dir ('terraform') {
                 sh '''
-                terraform init -input=false -auto-approve
+                terraform init -input=false 
                 terraform workspace select dev
                 '''
               }
