@@ -26,12 +26,14 @@
 # - name: ----------------!!!!!!!!!!!!!!-------------------
 #   shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
 #
-- name: debug env DOCKER_USER ----------------!!!!!!!!!!!!!!-------------------
+- name: debug var in shell command -----!!!!!!!!!!!!!!-------------
   shell: "echo {{ docker_user }} > shell.var.txt"
+
+- name: ------------     debug var in msg      --------------------
   debug:
     msg: "{{ docker_user }} is the docker_user variable."
 #
-- name: debug docker_user
+- name: ---- debug direct var docker_user -------!!!!!!!!!!!-------
   debug:
     var: docker_user
     verbosity: 2
