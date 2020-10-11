@@ -79,7 +79,7 @@ resource "aws_instance" "docker_instance" {
       # "git clone https://github.com/briukhanov/epam_lab_final.git",
       "mv /tmp/ansible ~/",
       "cd ~/ansible",
-      "ls -l"
+      "ls -l",
       "echo --------------------------------------------------------------",
       "sudo ansible-playbook site.yml --tags docker",
       "sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
@@ -87,7 +87,7 @@ resource "aws_instance" "docker_instance" {
       "sudo docker logout"
     ]
   }
-# "'sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)}\"'",
+  # "'sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)}\"'",
   # --extra-vars '{"docker_user":"$DOCKER_USER","docker_pwd":"$DOCKER_PWD"}'
   # --extra-vars "version=1.23.45 other_variable=foo"
 
