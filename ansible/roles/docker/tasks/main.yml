@@ -29,7 +29,7 @@
 - name: debug env DOCKER_USER ----------------!!!!!!!!!!!!!!-------------------
   shell: "echo {{ docker_user }} > shell.var.txt"
   debug:
-    msg: "'{{ docker_user }}' is the docker_user variable."
+    msg: "{{ docker_user }} is the docker_user variable."
 #
 - name: debug docker_user
   debug:
