@@ -22,9 +22,9 @@ resource "aws_instance" "web_instance" {
       "sudo apt -y aptitude",
       "sudo apt -y install ansible",
       "mv /tmp/ansible ~/",
-      "cd ~/ansible",
-      "sudo ansible-playbook site.yml --tags docker"
+      "cd ~/ansible"
     ]
+    # "sudo ansible-playbook site.yml --tags docker"
     # Use "webapp" as a tags for instal Tomcat, Postgrsql, and Buil dependencies for web_app_instance
   }
   connection {
@@ -80,7 +80,7 @@ resource "aws_instance" "docker_instance" {
       "mv /tmp/ansible ~/",
       "cd ~/ansible",
       "echo --------------------------------------------------------------",
-      "'sudo ansible-playbook --tags docker --extra-vars \"docker_user=${(var.docker_user)}\" site.yml'",
+      "'sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)}\"'",
       "sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
       "sudo docker run --name Jenkins -d -p 8080:8080 -p 50000:50000 wibob/intermine_dev_jenk:${(var.env_name)}",
       "sudo docker logout"
