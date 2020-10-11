@@ -80,6 +80,7 @@ resource "aws_instance" "docker_instance" {
       "mv /tmp/ansible ~/",
       "cd ~/ansible",
       "ls -l",
+      "pwd",
       "echo --------------------------------------------------------------",
       "sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)}\"",
       "sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
