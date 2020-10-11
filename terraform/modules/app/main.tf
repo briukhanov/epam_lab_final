@@ -65,7 +65,7 @@ resource "aws_instance" "docker_instance" {
   }
   provisioner "file" {
     source      = "../ansible"
-    destination = "~/ansible"
+    destination = "/tmp"
   }
 
   provisioner "remote-exec" {
@@ -77,7 +77,7 @@ resource "aws_instance" "docker_instance" {
       "sudo ansible --version",
       # "cd ~",
       # "git clone https://github.com/briukhanov/epam_lab_final.git",
-      # "mv /tmp/ansible ~/",
+      "mv /tmp/ansible ~/",
       "cd ~/ansible",
       "sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)} docker_pwd=${(var.docker_pwd)} env_name=${(var.env_name)}\""
       #"sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
