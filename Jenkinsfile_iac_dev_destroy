@@ -26,7 +26,7 @@ pipeline {
               AWS_SECRET_ACCESS_KEY = "${env.AWS_CRED_PSW}"
           }
           steps { dir ('terraform') {
-              sh 'terraform init -input=false -auto-approve'
+              sh 'terraform init -input=false'
               sh 'terraform workspace select dev'
             }
           }
