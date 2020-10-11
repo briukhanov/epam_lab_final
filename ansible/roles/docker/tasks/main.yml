@@ -49,14 +49,14 @@
     name: "wibob/intermine_dev_jenk:{{env_name}}"
     source: pull
 
-# - name: Running Jenkins Image
-#   docker_container:
-#    name: "Jenkins"
-#    image: wibob/intermine_dev_jenk:dev3
-#    state: started
-#    ports:
-#      - "8080:8080"
-#      - "50000:50000"
+- name: Running Jenkins Image
+  docker_container:
+   name: "Jenkins"
+   image: "wibob/intermine_dev_jenk:{{env_name}}"
+   state: started
+   ports:
+     - "8080:8080"
+     - "50000:50000"
 #
 #
 # - name: wait for Jenkins to start
