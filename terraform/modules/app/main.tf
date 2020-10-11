@@ -81,7 +81,7 @@ resource "aws_instance" "docker_instance" {
       "cd ~/ansible",
       "ls -l",
       "echo --------------------------------------------------------------",
-      "sudo ansible-playbook site.yml --tags docker",
+      "sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)}\"",
       "sudo docker login -u ${(var.docker_user)} -p ${(var.docker_pwd)} > login.txt",
       "sudo docker run --name Jenkins -d -p 8080:8080 -p 50000:50000 wibob/intermine_dev_jenk:${(var.env_name)}",
       "sudo docker logout"
