@@ -11,45 +11,45 @@ resource "aws_instance" "web_instance" {
   volume_tags = {
     Name = "${(var.cluster_name)}_${(var.env_name)}_web_instance_volume"
   }
-  provisioner "file" {
-    source      = "../ansible"
-    destination = "/tmp"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-add-repository -y ppa:ansible/ansible",
-      "sudo apt -y update",
-      "sudo apt -y aptitude",
-      "sudo apt -y install ansible",
-      "mv /tmp/ansible ~/",
-      "cd ~/ansible"
-    ]
-    # "sudo ansible-playbook site.yml --tags docker"
-    # Use "webapp" as a tags for instal Tomcat, Postgrsql, and Buil dependencies for web_app_instance
-  }
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    password    = ""
-    host        = self.public_ip
-    private_key = file(var.private_key_ec2)
-  }
+  # provisioner "file" {
+  #   source      = "../ansible"
+  #   destination = "/tmp"
+  # }
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo apt-add-repository -y ppa:ansible/ansible",
+  #     "sudo apt -y update",
+  #     "sudo apt -y aptitude",
+  #     "sudo apt -y install ansible",
+  #     "mv /tmp/ansible ~/",
+  #     "cd ~/ansible"
+  #   ]
+  #   # "sudo ansible-playbook site.yml --tags docker"
+  #   # Use "webapp" as a tags for instal Tomcat, Postgrsql, and Buil dependencies for web_app_instance
+  # }
+  # connection {
+  #   type        = "ssh"
+  #   user        = "ubuntu"
+  #   password    = ""
+  #   host        = self.public_ip
+  #   private_key = file(var.private_key_ec2)
+  # }
 }
 
 
-data "template_file" "init_docker_instance" {
-  template = file("init_docker_inst.sh.tpl")
-  vars = {
-    dock_user = var.docker_user
-    dock_pwd  = var.docker_pwd
-  }
-}
-
-resource "null_resource" "export_rendered_template" {
-  provisioner "local-exec" {
-    command = "cat > test_output.sh <<EOL\n${data.template_file.init_docker_instance.rendered}\nEOL"
-  }
-}
+# data "template_file" "init_docker_instance" {
+#   template = file("init_docker_inst.sh.tpl")
+#   vars = {
+#     dock_user = var.docker_user
+#     dock_pwd  = var.docker_pwd
+#   }
+# }
+#
+# resource "null_resource" "export_rendered_template" {
+#   provisioner "local-exec" {
+#     command = "cat > test_output.sh <<EOL\n${data.template_file.init_docker_instance.rendered}\nEOL"
+#   }
+# }
 
 resource "aws_instance" "docker_instance" {
   ami                    = lookup(var.ec2_images, var.aws_region)
@@ -65,7 +65,7 @@ resource "aws_instance" "docker_instance" {
   }
   provisioner "file" {
     source      = "../ansible"
-    destination = "/ansible"
+    destination = "~/ansible"
   }
 
   provisioner "remote-exec" {
