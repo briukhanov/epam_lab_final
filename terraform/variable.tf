@@ -9,7 +9,7 @@ variable "GITHUB_USER" {}
 # { default = "../aws.pem" }
 
 # AWS ec2_instance type
-variable "web_instance_type" { default = "t2.micro" }
+variable "web_instance_type" { default = "t2.medium" }
 variable "docker_instance_type" { default = "t2.micro" }
 
 # Name of private key stored in AWS. Used to access to ec2_instance
