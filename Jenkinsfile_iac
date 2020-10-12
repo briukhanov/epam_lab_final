@@ -82,7 +82,7 @@ pipeline {
 
               sshagent(credentials : ['wibob-int-jenkins']) {
                   sh "echo ${jenkins_dns}"
-                  sh "ssh -p 8022 ${jenkins_dns} safe-restart"
+                  sh "ssh -o StrictHostKeyChecking=no -p 8022 ${jenkins_dns} safe-restart"
                   sh "cat jenkins-set.groovy | ssh -p 8022 ${jenkins_dns} groovy ="
               }
             }
