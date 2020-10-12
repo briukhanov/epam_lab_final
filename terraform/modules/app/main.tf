@@ -103,7 +103,7 @@ data "template_file" "init_jenkins" {
   ]
 }
 
-output "jenkins-set.groovy" {
+output "jenkins-set" {
   value = data.template_file.init_jenkins.rendered
 }
 
