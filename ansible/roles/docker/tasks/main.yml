@@ -34,6 +34,9 @@
     dest: /usr/bin/docker-compose
     state: link
 
+- name: Config file - URL For Jenkins
+  template: src=jenkins-set.groovy.j2 dest=/tmp/jenkins-set.groovy
+
 - name: Log into DockerHub
   docker_login:
     username: "{{ docker_user }}"
@@ -53,10 +56,15 @@
    ports:
      - "8080:8080"
      - "50000:50000"
-#
-#
-# - name: wait for Jenkins to start
-#   wait_for: port=8080
+     - "8022:8022"
+
+
+- name: wait for Jenkins to start
+  wait_for: port=8080
+
+- name: wait for Jenkins to start
+  wait_for: port=8022
+
 
 # # Creates the number of containers defined by the variable create_containers, using values from vars file
 # - name: Create default containers

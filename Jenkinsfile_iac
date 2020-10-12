@@ -38,7 +38,7 @@ pipeline {
 
             steps { dir ('terraform') {
                 sh '''
-                terraform init -input=false 
+                terraform init -input=false
                 terraform workspace select dev
                 '''
               }
@@ -58,9 +58,18 @@ pipeline {
             steps { dir ('terraform') {
 
                 sh 'terraform apply -auto-approve -input=false tfplan'
+
+              sshagent(credentials : ['wibob-int-jenkins']) {
+                  sh """
+                  jenkins_dns=`terraform output docker_server_public_dns`
+                  cat jenkins-set.groovy | ssh -p 8022 $jenkins_dns groovy =
+                  ssh -p 8022 $jenkins_dns safe-restart
+                  """
+
               }
             }
           }
+        }
 
         // stage('Install Perl Libs') {
         //   steps { dir ('terraform') {

@@ -14,4 +14,4 @@ default_container_image: jenkins/jenkins
 default_container_command:
 
 # docker_user: "{{ lookup('env', 'DOCKER_USER') }}"
-docker_pwd: "{{ lookup('env', 'DOCKER_PWD') }}"
+# docker_pwd: "{{ lookup('env', 'DOCKER_PWD') }}"

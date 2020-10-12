@@ -24,7 +24,7 @@ module "network" {
   tags = var.workspace_to_env_name_map[terraform.workspace]
   # public_subnet_cidr =
   # route_table_cidr =
-  web_ports = ["22", "8080", "443"]
+  web_ports = ["22", "8080", "8022"]
 }
 
 # resource "null_resource" "export_variable" {

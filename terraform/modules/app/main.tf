@@ -62,7 +62,7 @@ resource "aws_instance" "docker_instance" {
       "sudo apt -y install ansible",
       "mv /tmp/ansible ~/",
       "cd ~/ansible",
-      "sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)} docker_pwd=${(var.docker_pwd)} env_name=${(var.env_name)}\""
+      "sudo ansible-playbook site.yml --tags docker --extra-vars \"docker_user=${(var.docker_user)} docker_pwd=${(var.docker_pwd)} env_name=${(var.env_name)} public_ip=${(self.public_ip)}\""
     ]
   }
 
