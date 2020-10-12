@@ -18,6 +18,7 @@ pipeline {
       TF_VAR_GITHUB_USER = "${env.GITHUB_TOKEN_USR}"
       TF_VAR_GITHUB_TOKEN = "${env.GITHUB_TOKEN_PSW}"
       jenkins_dns = ""
+      INT_JENKINS_KEY=credentials('int-jenk-privat')
   }
 
   stages {
@@ -80,11 +81,12 @@ pipeline {
         stage('Set Jenkins URL') {
           steps { dir ('terraform') {
 
-              sshagent(credentials : ['wibob-int-jenkins']) {
-                  sh "echo ${jenkins_dns}"
-                  sh "ssh -o StrictHostKeyChecking=no -l bruh -p 8022 ${jenkins_dns} safe-restart"
-                  sh "cat jenkins-set.groovy | ssh -o StrictHostKeyChecking=no -p 8022 -l bruh ${jenkins_dns} groovy ="
-              }
+              // sshagent(credentials : ['wibob-int-jenkins']) {
+              //     sh "echo ${jenkins_dns}"
+              //     sh "ssh -o StrictHostKeyChecking=no -l bruh -p 8022 ${jenkins_dns} safe-restart"
+              //     sh "cat jenkins-set.groovy | ssh -o StrictHostKeyChecking=no -p 8022 -l bruh ${jenkins_dns} groovy ="
+              // }
+              sh "ssh -o StrictHostKeyChecking=no -i ${env.INT_JENKINS_KEY} -l bruh -p 8022 ${jenkins_dns} safe-restart"
             }
           }
         }
