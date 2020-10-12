@@ -93,19 +93,19 @@ resource "local_file" "tf_ansible_vars_file_new" {
   ]
 }
 
-# data "template_file" "init_docker_instance" {
-#   template = file("init_docker_inst.sh.tpl")
-#   vars = {
-#     dock_user = var.docker_user
-#     dock_pwd  = var.docker_pwd
-#   }
-# }
-#
-# resource "null_resource" "export_rendered_template" {
-#   provisioner "local-exec" {
-#     command = "cat > test_output.sh <<EOL\n${data.template_file.init_docker_instance.rendered}\nEOL"
-#   }
-# }
+data "template_file" "init_jenkins" {
+  template = file("jenkins-set.groovy.tpl")
+  vars = {
+    jenkins_dns = ${aws_instance.docker_instance.public_dns}
+
+  }
+}
+
+resource "null_resource" "export_rendered_template" {
+  provisioner "local-exec" {
+    command = "cat > jenkins-set.groovy <<EOL\n${data.template_file.init_jenkins}\nEOL"
+  }
+}
 
 # resource "null_resource" "getting_pass" {
 #   provisioner "local-exec" {

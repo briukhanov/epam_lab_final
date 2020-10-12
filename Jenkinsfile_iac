@@ -17,6 +17,7 @@ pipeline {
       GITHUB_TOKEN=credentials('repohook')
       TF_VAR_GITHUB_USER = "${env.GITHUB_TOKEN_USR}"
       TF_VAR_GITHUB_TOKEN = "${env.GITHUB_TOKEN_PSW}"
+      jenkins_dns = ""
   }
 
   stages {
@@ -58,21 +59,36 @@ pipeline {
             steps { dir ('terraform') {
 
                 sh 'terraform apply -auto-approve -input=false tfplan'
+                script {
+                  sshagent(credentials : ['wibob-int-jenkins']) {
+
+                      tmp_param = sh (script: 'terraform output docker_server_public_dns', returnStdout: true).trim()
+                      jenkins_dns = tmp_param
+
+                  }
               }
             }
         }
+      }
+        stage('Var Test') {
+            steps {
+              sh "echo ${jenkins_dns}"
+
+            }
+        }
+
         stage('Set Jenkins URL') {
-          steps {
+          steps { dir ('terraform') {
+
               sshagent(credentials : ['wibob-int-jenkins']) {
-                  sh """
-                  jenkins_dns=`terraform output docker_server_public_dns`
-                  echo ${jenkins_dns}
-                  cat jenkins-set.groovy | ssh -p 8022 ${jenkins_dns} groovy =
-                  ssh -p 8022 ${jenkins_dns} safe-restart
-                  """
+                  sh "echo ${jenkins_dns}"
+                  sh "ssh -p 8022 ${jenkins_dns} safe-restart"
+                  sh "cat jenkins-set.groovy | ssh -p 8022 ${jenkins_dns} groovy ="
               }
             }
+          }
         }
+
 
 
         // stage('Install Perl Libs') {
