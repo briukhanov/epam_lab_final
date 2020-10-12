@@ -96,9 +96,11 @@ resource "local_file" "tf_ansible_vars_file_new" {
 data "template_file" "init_jenkins" {
   template = file("jenkins-set.groovy.tpl")
   vars = {
-    jenkins_dns = aws_instance.docker_instance.public_dns
-
+    jenkins_dns ="\'http://${(aws_instance.docker_instance.public_dns)}:8080\'"
   }
+  depends_on = [
+    aws_instance.docker_instance
+  ]
 }
 
 resource "null_resource" "export_rendered_template" {

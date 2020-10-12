@@ -7,7 +7,7 @@ import jenkins.model.JenkinsLocationConfiguration
 // parameters
 def jenkinsParameters = [
   email:  'Oleksandr Briukhanov <Oleksandr_Briukhanov@epam.com>',
-  url:    'https://${jenkins_dns}:8080/'
+  url:    ${jenkins_dns}
 ]
 
 // get Jenkins location configuration
