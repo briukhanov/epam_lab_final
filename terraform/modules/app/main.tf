@@ -103,11 +103,16 @@ data "template_file" "init_jenkins" {
   ]
 }
 
-# resource "null_resource" "export_rendered_template" {
-#   provisioner "local-exec" {
-#     command = "cat > jenkins-set.groovy <<EOL\n${data.template_file.init_jenkins}\nEOL"
-#   }
-# }
+output "jenkins-set.groovy" {
+  value = data.template_file.init_jenkins.rendered
+}
+
+
+resource "null_resource" "export_rendered_template" {
+  provisioner "local-exec" {
+    command = "cat > jenkins-set.groovy <<EOL\n${data.template_file.init_jenkins.rendered}\nEOL"
+  }
+}
 
 # resource "null_resource" "getting_pass" {
 #   provisioner "local-exec" {
