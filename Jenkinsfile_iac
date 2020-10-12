@@ -71,8 +71,8 @@ pipeline {
                   """
               }
             }
-          }
         }
+
 
         // stage('Install Perl Libs') {
         //   steps { dir ('terraform') {
