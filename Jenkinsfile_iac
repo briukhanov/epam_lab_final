@@ -49,8 +49,6 @@ pipeline {
         stage('Provision infrastructure (plan)') {
 
             steps { dir ('terraform') {
-
-                sh 'cp $TF_VAR_private_key_ec2 ../aws.pem'
                 sh 'terraform plan -out=tfplan -input=false'
               }
             }
