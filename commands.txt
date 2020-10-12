@@ -1,0 +1,222 @@
+
+terraform workspace new prod
+
+
+terraform apply -var-file=dev.tfvars
+
+terraform destroy -var-file=prod.tfvars
+
+terraform workspace select dev
+
+terraform destroy -var-file=dev.tfvars
+
+
+
+sudo ansible-playbook site.yml --tags webapp
+
+sudo ansible-playbook site.yml --tags docker
+
+
+
+wibob-Frankfurt-file
+
+environment {
+        AWS_EC2_KEY = credentials('wibob-Frankfurt-file')
+    }
+
+
+__________________
+mkdir git .intermine
+
+
+git@github.com:briukhanov/intermine.git
+https://github.com/briukhanov/intermine.git
+__________________
+cd git
+git clone https://github.com/intermine/biotestmine
+export DB_ENCODING=UTF-8
+export GRADLE_OPTS="-Dorg.gradle.daemon=false"
+cd biotestmine
+sudo -u postgres createuser --createdb -S -R ubuntu
+export DB_ENCODING=UTF8
+--------------------------------------------------
+Can be easier done from groovy script console . Go to http://your-jenkins-server/script In script window enter:
+
+item = Jenkins.instance.getItemByFullName("your-job-name-here")
+//THIS WILL REMOVE ALL BUILD HISTORY
+item.builds.each() { build ->
+  build.delete()
+}
+item.updateNextBuildNumber(1)
+-------------------------------------------------
+
+
+
+createdb --template template0 --username dnv 123
+
+
+docker run --name Jenkins -d -p 8080:8080 -p 50000:50000 wibob/intermine_dev_jenk:dev
+
+docker exec jenkins2-1 cat /var/jenkins_home/secrets/initialAdminPassword
+sudo docker cp ~/Downloads/terraform jenkins2-1:usr/local/bin
+sudo docker exec jenkins2-1 terraform --version
+docker build -t wibob/intermine_dev_jenk .
+docker exec jenkins2-1 cat /var/jenkins_home/secrets/initialAdminPassword
+
+
+docker exec jenkins2-1 java -jar /usr/lib/jenkins-plugin-manager.jar --plugins ssh-agent terraform
+
+docker exec -u 0 -it mycontainer bash
+
+docker commit Jenkins wibob/intermine_dev_jenk:dev
+docker login -u wibob -p Medudocza10
+docker push wibob/intermine_dev_jenk:dev
+
+
+
+echo Initial Admin password for Jenkins:
+ssh -o StrictHostKeyChecking=no ubuntu@$DOCKER_DNS "sudo docker exec Jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
+
+https://github.com/briukhanov/intermine/settings/hooks/253428445
+
+resource "github_repository_webhook" "biotestmine" {}
+terraform import github_repository_webhook.biotestmine intermine/253428445
+terraform show
+url          = "http://ec2-35-158-171-2.eu-central-1.compute.amazonaws.com:8080/github-webhook/"
+
+
+PGHOST
+PGPORT
+PGUSER
+
+
+sudo -u postgres createdb biotestmine
+
+biotestdb
+secret38
+
+CREATE USER ubu WITH PASSWORD '123' CREATEDB;
+CREATE USER biotestdb WITH PASSWORD 'secret38' CREATEDB;
+CREATE USER ubuntu SUPERUSER;
+sudo systemctl restart postgresql.service
+
+sudo -u postgres psql -c "create role biotestdb with login password 'secret38';"
+
+
+
+
+
+
+
+update pg_database set datallowconn = TRUE where datname = 'template0';
+\c template0
+update pg_database set datistemplate = FALSE where datname = 'template1';
+drop database template1;
+create database template1 with template = template0 encoding = 'UTF8' LC_COLLATE='C' LC_CTYPE='C';
+update pg_database set datistemplate = TRUE where datname = 'template1';
+\c template1
+update pg_database set datallowconn = FALSE where datname = 'template0';
+\q
+exit
+
+
+
+# - name: Installing DateTime
+#   command: cpan install DateTime
+# - name: Installing Module::Find
+#   command: cpan install Module::Find
+# - name: Installing Web::Scraper
+#   command: cpan install Web::Scraper
+# - name: Installing Ouch
+#   command: cpan install Ouch
+# - name: Installing Number::Format
+#   command: cpan install Number::Format
+# - name: Installing PerlIO::gzip
+#   command: cpan install PerlIO::gzip
+# - name: Installing Perl6::Junction
+#   command: cpan install Perl6::Junction
+# - name: Installing List::MoreUtils
+#   command: cpan install List::MoreUtils
+# - name: Installing LWP
+#   command: cpan install LWP
+# - name: Installing Module::Find
+#   command: cpan install Module::Find
+# - name: Installing Moose
+#   command: cpan install Moose
+# - name: Installing MooseX::Role::WithOverloading
+#   command: cpan install MooseX::Role::WithOverloading
+# - name: Installing MooseX::Types
+#   command: cpan install MooseX::Types
+# - name: Installing Text::CSV_XS
+#   command: cpan install Text::CSV_XS
+# - name: Installing URI
+#   command: cpan install URI
+# - name: Installing XML::Parser::PerlSAX
+#   command: cpan install XML::Parser::PerlSAX
+# - name: Installing XML::DOM
+#   command: cpan install XML::DOM
+# - name: Installing Text::Glob
+#   command: cpan install Text::Glob
+# - name: Installing MooseX::FollowPBP
+#   command: cpan install MooseX::FollowPBP
+# - name: Installing MooseX::ABC
+#   command: cpan install MooseX::ABC
+# - name: Installing MooseX::FileAttribute
+#   command: cpan install MooseX::FileAttribute
+
+
+# with_items:
+#   - App::cpaminus
+#   - DateTime
+#   - Module::Find
+#   - Web::Scraper
+#   - Ouch
+#   - Number::Format
+#   - PerlIO::gzip
+#   - Perl6::Junction
+#   - List::MoreUtils
+#   - LWP
+#   - Module::Find
+#   - Moose
+#   - MooseX::Role::WithOverloading
+#   - MooseX::Types
+#   - Text::CSV_XS
+#   - URI
+#   - XML::Parser::PerlSAX
+#   - XML::DOM
+#   - Text::Glob
+#   - MooseX::FollowPBP
+#   - MooseX::ABC
+#   - MooseX::FileAttribute
+
+#
+# - name: Install Perl lib dependencies
+#   apt:
+#     name: {{item}}
+#     state: present
+#   with_items:
+#     - libdatetime-perl
+#     - libmodule-find-perl
+#     - libweb-scraper-perl
+#     - libouch-perl
+#     - libnumber-format-perl
+#     - libperlio-gzip-perl
+#     - libperl6-junction-perl
+#     - liblist-moreutils-perl
+#     - liblwp-perl
+#     - libmodule-find-perl
+#     - libmoose-perl
+#     - libmoosex-role-withoverloading-perl
+#     - libmoosex-types-perl
+#     - libtext-csv_xs-perl
+#     - liburi-perl
+#     - libxml-parser-perlsax-perl
+#     - libxml-dom-perl
+#     - libtext-glob-perl
+#     - libmoosex-followpbp-perl
+#     - libmoosex-abc-perl
+#     - libmoosex-fileattribute-perl
+#     - libgetopt-std-perl
+#     - liblog-handler-perl
+#     - libdigest-md5-perl
+#

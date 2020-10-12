@@ -22,21 +22,17 @@
   pip:
     name: docker
 
+- name: Install Docker Compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
 
-# - name: ----------------!!!!!!!!!!!!!!-------------------
-#   shell: "echo docker login -u $DOCKER_USER -p $DOCKER_PWD"
-#
-- name: debug var in shell command -----!!!!!!!!!!!!!!-------------
-  shell: "echo {{ docker_user }} > shell.var.txt"
-
-- name: ------------     debug var in msg      --------------------
-  debug:
-    msg: "{{ docker_user }} is the docker_user variable."
-#
-- name: ---- debug direct var docker_user -------!!!!!!!!!!!-------
-  debug:
-    var: docker_user
-    verbosity: 2
+- name: Create a symbolic link
+  file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    state: link
 
 - name: Log into DockerHub
   docker_login:
