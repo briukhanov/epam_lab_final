@@ -1,6 +1,6 @@
 
 resource "github_repository_webhook" "biotestmine" {
-  repository = "intermine"
+  repository = "docker-intermine-gradle"
   # id         = "253428445"
   # url        = "https://api.github.com/repos/briukhanov/intermine/hooks/253428445"
   active = true
