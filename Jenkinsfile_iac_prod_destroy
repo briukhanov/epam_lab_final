@@ -18,8 +18,8 @@ pipeline {
 
       stage('Provision infrastructure (init)') {
           steps { dir ('terraform') {
-              sh 'terraform init -input=false'
-              sh 'terraform workspace select dev'
+              sh 'terraform init -force-copy'
+              sh 'terraform workspace select prod'
             }
           }
       }
