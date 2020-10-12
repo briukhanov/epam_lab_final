@@ -50,6 +50,9 @@ item.builds.each() { build ->
 item.updateNextBuildNumber(1)
 -------------------------------------------------
 
+intermine_builder
+intermine_postgres
+intermine_tomcat
 
 
 createdb --template template0 --username dnv 123

@@ -71,7 +71,7 @@ pipeline {
             }
         }
       }
-
+      
 
         stage('Set Jenkins URL') {
           steps { dir ('terraform') {
@@ -84,7 +84,7 @@ pipeline {
               // sh "ssh -o StrictHostKeyChecking=no -i ${env.INT_JENKINS_KEY} -p 8022 -l bruh ${jenkins_dns} groovy = << jenkins-set.groovy"
               sh """
               cat jenkins-set.groovy | ssh -o StrictHostKeyChecking=no -i "${env.INT_JENKINS_KEY}" -p 8022 "bruh@${jenkins_dns}" groovy =
-              ssh -o StrictHostKeyChecking=no -i "${env.INT_JENKINS_KEY}"  -p 8022 "bruh@${jenkins_dns}" safe-restart
+              sh "ssh -o StrictHostKeyChecking=no -i ${env.INT_JENKINS_KEY} -l bruh -p 8022 ${jenkins_dns} safe-restart
               """
             }
           }
