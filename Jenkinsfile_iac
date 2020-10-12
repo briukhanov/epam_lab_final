@@ -66,8 +66,9 @@ pipeline {
               sshagent(credentials : ['wibob-int-jenkins']) {
                   sh """
                   jenkins_dns=`terraform output docker_server_public_dns`
-                  cat jenkins-set.groovy | ssh -p 8022 $jenkins_dns groovy =
-                  ssh -p 8022 $jenkins_dns safe-restart
+                  echo ${jenkins_dns}
+                  cat jenkins-set.groovy | ssh -p 8022 ${jenkins_dns} groovy =
+                  ssh -p 8022 ${jenkins_dns} safe-restart
                   """
               }
             }
